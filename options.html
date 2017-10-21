@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8">
+    <title>fooooo</title>
+  </head>
+  <body style="margin: 0">
+    <div>
+      <h1>fooooo</h1>
+    </div>
+    <div>
+      <button id="open-overlay-button" type="submit">
+        Open Overlay
+      </button>
+      <button id="close-overlay-button" type="submit" onclick="closeOverlay()">
+        Close Overlay
+      </button>
+      <button id="foo" type="submit">
+        Choose image
+      </button>
+      <button id="foo" type="submit">
+        Drag and drop area
+      </button>
+      <input type="range" name="overlay-opacity" id="overlay-opacity" value="50" />
+    </div>
+
+    <div>
+      <!-- All of the Node.js APIs are available in this renderer process. -->
+      We are using Node.js <script>document.write(process.versions.node)</script>,
+      Chromium <script>document.write(process.versions.chrome)</script>,
+      and Electron <script>document.write(process.versions.electron)</script>.
+    </div>
+
+    <script>
+      // You can also require other files to run in this process
+      require('./options-renderer.js')
+    </script>
+  </body>
+</html>

@@ -1,0 +1,14 @@
+{
+  "name": "overlay",
+  "version": "0.0.1",
+  "description": "Do the thing",
+  "main": "main.js",
+  "scripts": {
+    "start": "electron ."
+  },
+  "repository": "https://github.com/22a/overlay",
+  "license": "UNLICENSED",
+  "devDependencies": {
+    "electron": "~1.7.8"
+  }
+}
