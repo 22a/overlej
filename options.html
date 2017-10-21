@@ -3,8 +3,9 @@
   <head>
     <meta charset="UTF-8">
     <title>Overlay</title>
+    <link rel="stylesheet" href="./options.css" type="text/css" media="all" />
   </head>
-  <body style="margin: 0">
+  <body>
     <div>
       <h1>Overlay thing</h1>
     </div>
@@ -18,10 +19,10 @@
       <button id="open-image-select-button" type="submit">
         Choose image
       </button>
-      <button id="foo" type="submit">
-        TODO: Drag and drop area
-      </button>
       <input type="range" name="overlay-opacity" id="overlay-opacity" value="50" />
+    </div>
+    <div>
+      <img id="preview-img" src="" alt="preview-image"/>
     </div>
     <script>
       require('./options-renderer.js')

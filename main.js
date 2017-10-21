@@ -14,6 +14,9 @@ const persistImageUrlToLocalStorage = url => {
 const persistImageOpacityToLocalStorage = opacityValue => {
   optionsWindow.webContents.send('persist-overlay-opacity', opacityValue)
 }
+const persistOverlayStatusToLocalStorage = status => {
+  optionsWindow.webContents.send('persist-overlay-status', status)
+}
 
 const setOverlayImage = ([filePath]) => {
   const imageUrl = url.format({
@@ -80,6 +83,7 @@ const renderOverlay = () => {
     overlayWindow = null
   })
 
+  persistOverlayStatusToLocalStorage(true)
   // close the main window then the overlay opens
   optionsWindow.close()
 }
@@ -89,6 +93,7 @@ const killOverlay = () => {
     overlayWindow.close()
     overlayWindow = null
   }
+  persistOverlayStatusToLocalStorage(false)
 }
 
 const createOptionsWindow = () => {
