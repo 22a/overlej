@@ -6,6 +6,7 @@ const {ipcRenderer} = require('electron')
 
 const overlayToggleButton = document.getElementById('overlay-toggle-button')
 const changeOverlayOpacityInput = document.getElementById('overlay-opacity')
+const opacityValueElement = document.getElementById('opacity-value-indicator')
 const openImageSelectButton = document.getElementById('open-image-select-button')
 const previewImage = document.getElementById('preview-img')
 
@@ -21,49 +22,57 @@ const renderPreview = () => {
   }
 }
 
+const triggerToggleButtonRender = () => {
+  ipcRenderer.send('main-action', { action: 'overlay-status-check' })
+}
+
 const renderOverlayToggleButton = () => {
   const imageUrl = window.localStorage.getItem('imageUrl')
   const imageOpacity = window.localStorage.getItem('imageOpacity')
   if (imageUrl) {
     const overlayIsOpen = window.localStorage.getItem('isOpen')
-    const overlayWasOpenedThisSession = window.sessionStorage.getItem('opened')
-    if (overlayIsOpen && overlayWasOpenedThisSession) {
+    if (overlayIsOpen) {
       overlayToggleButton.innerHTML = 'Close Overlay'
       overlayToggleButton.onclick = closeOverlay
       overlayToggleButton.disabled = false
+      overlayToggleButton.classList.add('button-close')
+      overlayToggleButton.classList.remove('button-open')
     } else {
       overlayToggleButton.innerHTML = 'Open Overlay'
       overlayToggleButton.onclick = openOverlay
       overlayToggleButton.disabled = false
+      overlayToggleButton.classList.add('button-open')
+      overlayToggleButton.classList.remove('button-close')
     }
   } else {
     overlayToggleButton.innerHTML = 'Open Overlay'
     overlayToggleButton.onclick = () => {}
     overlayToggleButton.disabled = true
+    overlayToggleButton.classList.add('button-open')
+    overlayToggleButton.classList.remove('button-close')
   }
 }
 
 const openOverlay = () => {
-  window.sessionStorage.setItem('opened', true)
   ipcRenderer.send('overlay-action', {
     action: 'open-overlay'
   })
+  // setOverlayStatus(true)
 }
 
 const persistOverlayImageSource = url => {
   window.localStorage.setItem('imageUrl', url)
   renderPreview()
-  renderOverlayToggleButton()
+  triggerToggleButtonRender()
 }
 
 const persistOverlayImageOpacity = value => {
   window.localStorage.setItem('imageOpacity', value)
   renderPreview()
-  renderOverlayToggleButton()
+  triggerToggleButtonRender()
 }
 
-const persistOverlayStatus = status => {
-  console.log(status)
+const setOverlayStatus = status => {
   if (status) {
     window.localStorage.setItem('isOpen', status)
   } else {
@@ -72,15 +81,22 @@ const persistOverlayStatus = status => {
   renderOverlayToggleButton()
 }
 
+const initialiseOpacitySlider = () => {
+  const opacityValue = window.localStorage.getItem('imageOpacity')
+  changeOverlayOpacityInput.value = opacityValue
+  opacityValueElement.innerHTML = opacityValue
+}
+
 const closeOverlay = () => {
   ipcRenderer.send('overlay-action', {
     action: 'close-overlay'
   })
-  persistOverlayStatus(false)
+  setOverlayStatus(false)
 }
 
 const changeOverlayOpacity = () => {
   const opacityValue = changeOverlayOpacityInput.value
+  opacityValueElement.innerHTML = opacityValue
   persistOverlayImageOpacity(opacityValue)
   ipcRenderer.send('overlay-action', {
     action: 'change-overlay-opacity',
@@ -111,21 +127,22 @@ ipcRenderer.on('persist-overlay-url', (event, imageUrl) => {
 ipcRenderer.on('persist-overlay-opacity', (event, opacityValue) => {
   persistOverlayImageOpacity(opacityValue)
 })
-ipcRenderer.on('persist-overlay-status', (event, status) => {
-  persistOverlayStatus(status)
+ipcRenderer.on('overlay-status', (event, status) => {
+  setOverlayStatus(status)
 })
 
 document.ondragover = document.ondrop = (ev) => {
   ev.preventDefault()
 }
-document.body.ondrop = (ev) => {
+document.ondrop = (ev) => {
   ev.preventDefault()
   const imageUrl = ev.dataTransfer.files[0].path
   changeOverlayImageUrl(imageUrl)
 }
 
+initialiseOpacitySlider()
+triggerToggleButtonRender()
 renderPreview()
-renderOverlayToggleButton()
 
 // TODO: some spicy ondragdrop hover styles
 // document.addEventListener('dragenter', applyHoverStyle, false);

@@ -18,7 +18,10 @@ const persistOverlayStatusToLocalStorage = status => {
   optionsWindow.webContents.send('persist-overlay-status', status)
 }
 
-const setOverlayImage = ([filePath]) => {
+const setOverlayImage = (filePaths) => {
+  if (!filePaths) return
+
+  const [filePath] = filePaths
   const imageUrl = url.format({
     pathname: filePath,
     protocol: 'file:',
@@ -53,21 +56,21 @@ const renderOverlay = () => {
   if (overlayWindow) return
 
   overlayWindow = new BrowserWindow({
-    // type: 'desktop',
-    // focusable: false,
-    // transparent: true,
+    type: 'desktop',
+    focusable: false,
+    transparent: true,
     frame: false,
     webPreferences: {
       webSecurity: false
     }
   })
 
-  // overlayWindow.setAlwaysOnTop(true, 'screen-saver')
-  // overlayWindow.setFocusable(false)
-  // overlayWindow.setIgnoreMouseEvents(true)
-  // overlayWindow.maximize()
+  overlayWindow.setAlwaysOnTop(true, 'screen-saver')
+  overlayWindow.setFocusable(false)
+  overlayWindow.setIgnoreMouseEvents(true)
+  overlayWindow.maximize()
 
-  overlayWindow.webContents.openDevTools()
+  // overlayWindow.webContents.openDevTools()
 
   overlayWindow.loadURL(url.format({
     pathname: path.join(__dirname, 'overlay.html'),
@@ -111,8 +114,11 @@ const createOptionsWindow = () => {
     slashes: true
   }))
 
+  optionsWindow.setMaximizable(false)
+  optionsWindow.setFullScreenable(false)
+
   // Open the DevTools.
-  optionsWindow.webContents.openDevTools()
+  // optionsWindow.webContents.openDevTools()
 
   // Emitted when the window is closed.
   optionsWindow.on('closed', function () {
@@ -151,6 +157,9 @@ ipcMain.on('main-action', (event, {action, value}) => {
   switch (action) {
     case 'open-image-select-dialog':
       openImageSelectDialog()
+      break
+    case 'overlay-status-check':
+      optionsWindow.webContents.send('overlay-status', Boolean(overlayWindow))
       break
     default:
       console.log('I\'m not sure what you\'re trying to do here. action: ', action)

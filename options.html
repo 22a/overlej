@@ -6,24 +6,53 @@
     <link rel="stylesheet" href="./options.css" type="text/css" media="all" />
   </head>
   <body>
-    <div>
-      <h1>Overlay thing</h1>
+    <div class="center">
+      <h2>Overlay thing</h2>
     </div>
     <div class="step">
-      <button id="open-image-select-button" type="submit">
-        Choose an image
-      </button>
-      or drag and drop and image into this window
+      <span class="step-number">
+        1.
+      </span>
+      <div class="center">
+        <div>
+          <button class="button-select" id="open-image-select-button" type="submit">
+            Choose an image
+          </button>
+        </div>
+        <div>
+          or drag and drop and image into this window
+        </div>
+      </div>
     </div>
     <div class="step">
-      Choose an opacity:
-      <input type="range" name="overlay-opacity" id="overlay-opacity" value="50" />
+      <div class="center">
+        <span class="step-number left">
+          2.
+        </span>
+        <span class="left-offset">
+          Choose Opacity
+        </span>
+      </div>
+      <div class="range-slider center">
+        <input type="range" class="range-slider__range" name="overlay-opacity" id="overlay-opacity" value="50"/>
+        <span id="opacity-value-indicator" class="range-slider__value">50</span>
+      </div>
     </div>
     <div class="step">
-      <img id="preview-img" src="" alt="preview-image"/>
+      <span class="step-number">
+        3.
+      </span>
+      <div class="center">
+        <button class="toggle-button" id="overlay-toggle-button" type="submit"></button>
+      </div>
     </div>
-    <div class="step">
-      <button id="overlay-toggle-button" type="submit"></button>
+    <div class="step center">
+      <span>
+        Preview
+      </span>
+      <div>
+        <img id="preview-img" src="" alt="preview-image"/>
+      </div>
     </div>
     <script>
       require('./options-renderer.js')
