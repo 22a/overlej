@@ -2,12 +2,19 @@
 
 A desktop application that lets you overlay images on all your workspaces.
 
+<img height="600" alt="Overlej" src="https://user-images.githubusercontent.com/7144173/31867355-ed5a1d74-b785-11e7-8ff7-71c66adb719b.png">
+
 ## Features
 * It lets you choose an image, and choose an opacity level.
 * It also makes sure to render the overlay on all desktops/workspaces.
 * Cross platform***
 
 *** maybe, I have only tested on macOS. Window managers are hard, so who knows what this looks like on linus or bill OS
+
+### Screenshots
+
+[Image selection](https://user-images.githubusercontent.com/7144173/31867357-f0832f9a-b785-11e7-9f7a-a5ec0ba69e2f.png), [an overlay](https://user-images.githubusercontent.com/7144173/31867358-f379ac6a-b785-11e7-98ba-73dbe0d5c996.png), [multi workspace example](https://user-images.githubusercontent.com/7144173/31867359-f5e8f618-b785-11e7-9342-4e7eab3b2a79.png).
+
 
 ## Installation
 Do you trust me? Do I trust me? Do you want to play the "execute 45mb of arbitrary code" game?
@@ -46,6 +53,7 @@ yarn build
 ## Why?
 I'm not certain why other people use apps like these, but I was in the market for one because I got a fancy new keyboard and I couldn't remember my key layout so I wanted to be able to see it, with my eyes, all the time. There are a handful of apps like this out there - [Overlay2](http://www.colinthomas.com/overlay/), [Glueprint](http://glueprintapp.com/), [LayerX](https://github.com/yuhua-chen/LayerX), [etc](https://alternativeto.net/software/overlay2/) - but none of them were both free and allowed me to have the image be displayed on ALL workspaces. I was happy with Glueprint but got lost and confused and ashamed when I would swap workspaces and forget where my keys were.
 
+<img width="1280" alt="Somewhat practical use" src="https://user-images.githubusercontent.com/7144173/31867360-f829c0b0-b785-11e7-89ac-7a28fa2937df.png">
 
 ## Learney Nuggets
 I had never packaged an electron app before and didn't know how to make the `.icns` and `.ico` files I needed. Follow me and I'll teach you how:
