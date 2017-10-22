@@ -4,8 +4,7 @@
 
 const {ipcRenderer} = require('electron')
 
-const openOverlayButton = document.getElementById('open-overlay-button')
-const closeOverlayButton = document.getElementById('close-overlay-button')
+const overlayToggleButton = document.getElementById('overlay-toggle-button')
 const changeOverlayOpacityInput = document.getElementById('overlay-opacity')
 const openImageSelectButton = document.getElementById('open-image-select-button')
 const previewImage = document.getElementById('preview-img')
@@ -15,14 +14,37 @@ const renderPreview = () => {
   const imageOpacity = window.localStorage.getItem('imageOpacity')
   if (imageUrl) {
     previewImage.src = imageUrl
-    previewImage.style.opacity = Math.max(0, Math.min(100, imageOpacity)) / 100
+    previewImage.style.opacity = Math.max(0, Math.min(100, imageOpacity || 50)) / 100
     previewImage.classList.add('visible')
   } else {
     previewImage.classList.remove('visible')
   }
 }
 
+const renderOverlayToggleButton = () => {
+  const imageUrl = window.localStorage.getItem('imageUrl')
+  const imageOpacity = window.localStorage.getItem('imageOpacity')
+  if (imageUrl) {
+    const overlayIsOpen = window.localStorage.getItem('isOpen')
+    const overlayWasOpenedThisSession = window.sessionStorage.getItem('opened')
+    if (overlayIsOpen && overlayWasOpenedThisSession) {
+      overlayToggleButton.innerHTML = 'Close Overlay'
+      overlayToggleButton.onclick = closeOverlay
+      overlayToggleButton.disabled = false
+    } else {
+      overlayToggleButton.innerHTML = 'Open Overlay'
+      overlayToggleButton.onclick = openOverlay
+      overlayToggleButton.disabled = false
+    }
+  } else {
+    overlayToggleButton.innerHTML = 'Open Overlay'
+    overlayToggleButton.onclick = () => {}
+    overlayToggleButton.disabled = true
+  }
+}
+
 const openOverlay = () => {
+  window.sessionStorage.setItem('opened', true)
   ipcRenderer.send('overlay-action', {
     action: 'open-overlay'
   })
@@ -31,21 +53,30 @@ const openOverlay = () => {
 const persistOverlayImageSource = url => {
   window.localStorage.setItem('imageUrl', url)
   renderPreview()
+  renderOverlayToggleButton()
 }
 
 const persistOverlayImageOpacity = value => {
   window.localStorage.setItem('imageOpacity', value)
   renderPreview()
+  renderOverlayToggleButton()
 }
 
 const persistOverlayStatus = status => {
-  window.localStorage.setItem('isOpen', status)
+  console.log(status)
+  if (status) {
+    window.localStorage.setItem('isOpen', status)
+  } else {
+    window.localStorage.removeItem('isOpen')
+  }
+  renderOverlayToggleButton()
 }
 
 const closeOverlay = () => {
   ipcRenderer.send('overlay-action', {
     action: 'close-overlay'
   })
+  persistOverlayStatus(false)
 }
 
 const changeOverlayOpacity = () => {
@@ -71,8 +102,6 @@ const openImageSelect = () => {
   })
 }
 
-openOverlayButton.onclick = openOverlay
-closeOverlayButton.onclick = closeOverlay
 changeOverlayOpacityInput.oninput = changeOverlayOpacity
 openImageSelectButton.onclick = openImageSelect
 
@@ -96,6 +125,7 @@ document.body.ondrop = (ev) => {
 }
 
 renderPreview()
+renderOverlayToggleButton()
 
 // TODO: some spicy ondragdrop hover styles
 // document.addEventListener('dragenter', applyHoverStyle, false);

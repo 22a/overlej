@@ -80,6 +80,7 @@ const renderOverlay = () => {
     // Dereference the window object, usually you would store windows
     // in an array if your app supports multi windows, this is the time
     // when you should delete the corresponding element.
+    persistOverlayStatusToLocalStorage(false)
     overlayWindow = null
   })
 
@@ -93,13 +94,12 @@ const killOverlay = () => {
     overlayWindow.close()
     overlayWindow = null
   }
-  persistOverlayStatusToLocalStorage(false)
 }
 
 const createOptionsWindow = () => {
   // Create the browser window.
   optionsWindow = new BrowserWindow({
-    width: 800,
+    width: 360,
     height: 600,
     titleBarStyle: 'hidden',
     frame: false
@@ -121,7 +121,6 @@ const createOptionsWindow = () => {
     // when you should delete the corresponding element.
     optionsWindow = null
   })
-
 }
 
 // This method will be called when Electron has finished

@@ -9,20 +9,21 @@
     <div>
       <h1>Overlay thing</h1>
     </div>
-    <div>
-      <button id="open-overlay-button" type="submit">
-        Open Overlay
-      </button>
-      <button id="close-overlay-button" type="submit">
-        Close Overlay
-      </button>
+    <div class="step">
       <button id="open-image-select-button" type="submit">
-        Choose image
+        Choose an image
       </button>
+      or drag and drop and image into this window
+    </div>
+    <div class="step">
+      Choose an opacity:
       <input type="range" name="overlay-opacity" id="overlay-opacity" value="50" />
     </div>
-    <div>
+    <div class="step">
       <img id="preview-img" src="" alt="preview-image"/>
+    </div>
+    <div class="step">
+      <button id="overlay-toggle-button" type="submit"></button>
     </div>
     <script>
       require('./options-renderer.js')
