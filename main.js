@@ -73,7 +73,7 @@ const renderOverlay = () => {
   // overlayWindow.webContents.openDevTools()
 
   overlayWindow.loadURL(url.format({
-    pathname: path.join(__dirname, 'overlay.html'),
+    pathname: path.join(__dirname, 'overlay', 'overlay.html'),
     protocol: 'file:',
     slashes: true
   }))
@@ -112,7 +112,7 @@ const createOptionsWindow = () => {
   })
 
   optionsWindow.loadURL(url.format({
-    pathname: path.join(__dirname, 'options.html'),
+    pathname: path.join(__dirname, 'options', 'options.html'),
     protocol: 'file:',
     slashes: true
   }))
