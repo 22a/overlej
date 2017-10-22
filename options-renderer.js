@@ -82,7 +82,7 @@ const setOverlayStatus = status => {
 }
 
 const initialiseOpacitySlider = () => {
-  const opacityValue = window.localStorage.getItem('imageOpacity')
+  const opacityValue = window.localStorage.getItem('imageOpacity') || 50
   changeOverlayOpacityInput.value = opacityValue
   opacityValueElement.innerHTML = opacityValue
 }
