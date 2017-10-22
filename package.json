@@ -1,6 +1,6 @@
 {
   "name": "Overlej",
-  "version": "0.0.1",
+  "version": "1.0.0",
   "description": "Overlays an image on all your desktops",
   "main": "main.js",
   "scripts": {
