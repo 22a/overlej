@@ -10,7 +10,7 @@ A desktop application that lets you overlay images on all your workspaces.
 *** maybe, I have only tested on macOS. Window managers are hard, so who knows what this looks like on linus or bill OS
 
 ## Installation
-Do you trust me? Do I trust me? Do you want to play the "let's execute 120mb of arbitrary code on my machine" game? 
+Do you trust me? Do I trust me? Do you want to play the "execute 45mb of arbitrary code" game?
 
 ### Yes
 Install the app from the [releases page](https://github.com/22a/overlej/releases).
