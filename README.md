@@ -14,6 +14,7 @@ Do you trust me? Do I trust me? Do you want to play the "execute 45mb of arbitra
 
 ### Yes
 Install the app from the [releases page](https://github.com/22a/overlej/releases).
+Then do the right-click -> open trick, because I haven't signed it.
 
 ### No
 Build it from source.
