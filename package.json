@@ -4,11 +4,20 @@
   "description": "Do the thing",
   "main": "main.js",
   "scripts": {
-    "start": "electron ."
+    "start": "electron .",
+    "pack": "electron-builder --dir",
+    "dist": "electron-builder"
+  },
+  "build": {
+    "appId": "co.meehan.overlej",
+    "mac": {
+      "category": "public.app-category.utilities"
+    }
   },
   "repository": "https://github.com/22a/overlay",
   "license": "UNLICENSED",
   "devDependencies": {
-    "electron": "~1.7.8"
+    "electron": "~1.7.8",
+    "electron-builder": "^19.37.2"
   }
 }
