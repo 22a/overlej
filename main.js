@@ -105,7 +105,10 @@ const createOptionsWindow = () => {
     width: 360,
     height: 600,
     titleBarStyle: 'hidden',
-    frame: false
+    frame: false,
+    webPreferences: {
+      devTools: false
+    }
   })
 
   optionsWindow.loadURL(url.format({
